@@ -1,12 +1,14 @@
 // ===== src/pages/InitiativesPage.jsx =====
-// Step 9 · List + create + delete
+// Step 9 · List + create + delete  ·  Step 10 · Logout button (useAuth)
 // Concepts: useState, useEffect (fetch on load), loading / error / empty states,
 //           lists with key, lifting state up (form -> page), updating state immutably.
 import { useEffect, useState } from "react";
 import { apiFetch } from "../api";
 import InitiativeForm from "../components/InitiativeForm";
+import { useAuth } from "../auth/AuthContext"; // Step 10: for the Logout button
 
 export default function InitiativesPage() {
+  const { logout } = useAuth();
   const [items, setItems] = useState([]);       // the data
   const [loading, setLoading] = useState(true); // true until the first fetch finishes
   const [error, setError] = useState(null);     // error message, or null
@@ -44,7 +46,9 @@ export default function InitiativesPage() {
 
   return (
     <div className="page">
-      <h1>Initiatives</h1>
+      <h1>
+        Initiatives <button onClick={logout}>Logout</button>
+      </h1>
       <InitiativeForm onCreate={handleCreate} />
 
       {items.length === 0 ? (
