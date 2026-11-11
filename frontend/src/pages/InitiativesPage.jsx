@@ -5,6 +5,7 @@
 import { useEffect, useState } from "react";
 import { apiFetch } from "../api";
 import InitiativeForm from "../components/InitiativeForm";
+import Summary from "../components/Summary"; // Step 11: streaming summary per row
 import { useAuth } from "../auth/AuthContext"; // Step 10: for the Logout button
 
 export default function InitiativesPage() {
@@ -62,6 +63,7 @@ export default function InitiativesPage() {
                 <strong>{item.name}</strong> · {item.status} · budget {item.budget}
               </span>
               <button onClick={() => handleDelete(item.id)}>Delete</button>
+              <Summary initiativeId={item.id} /> {/* Step 11 */}
             </li>
           ))}
         </ul>

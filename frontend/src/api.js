@@ -3,7 +3,7 @@
 // Step 10 · JSON header only for JSON bodies (login sends form data) · 401 → log out
 // Concepts: fetch, async/await, JSON body, Authorization header, turning HTTP errors into JS errors.
 
-const API_URL = "http://localhost:8000"; // our FastAPI server
+export const API_URL = "http://localhost:8000"; // our FastAPI server (exported for Step 11)
 
 export async function apiFetch(path, options = {}) {
   const token = localStorage.getItem("token"); // saved by login() in AuthContext

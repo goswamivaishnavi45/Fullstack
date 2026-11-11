@@ -1,8 +1,12 @@
 # ===== app/routers/initiatives.py =====
 # Step 3 · CRUD routes  ·  Step 4 · made thin  ·  Step 5 · pagination + filter
 # Step 6 · login required for all routes; edit/delete only by owner or admin
+# Step 11 · streaming summary (StreamingResponse + generator)
 # Concepts: APIRouter, path/query/body params, response_model, status codes, Depends.
+import time
+
 from fastapi import APIRouter, Depends
+from fastapi.responses import StreamingResponse
 
 from app.deps import DB, CurrentUser, OwnedInitiative, Page, get_current_user
 from app.schemas.initiative import (
@@ -58,3 +62,17 @@ def create_milestone(initiative: OwnedInitiative, body: MilestoneCreate, db: DB)
 @router.get("/{initiative_id}/milestones", response_model=list[MilestoneOut])
 def list_milestones(initiative_id: int, db: DB):
     return service.list_milestones(db, initiative_id)
+
+
+# Step 11 · Send the summary word by word instead of all at once.
+@router.get("/{initiative_id}/summary")
+def stream_summary(initiative_id: int, db: DB):
+    initiative = service.get_initiative(db, initiative_id)  # 404 BEFORE streaming starts
+    text = service.build_summary(initiative)  # use the DB now, not inside the generator
+
+    def word_stream():  # a generator: `yield` sends one piece, then continues
+        for word in text.split(" "):
+            yield word + " "
+            time.sleep(0.15)  # pretend the AI is "thinking" between words
+
+    return StreamingResponse(word_stream(), media_type="text/plain")
