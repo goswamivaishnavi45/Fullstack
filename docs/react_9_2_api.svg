@@ -1,0 +1,102 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1500" height="930" viewBox="0 0 1500 930">
+  <defs>
+    <marker id="a" markerUnits="userSpaceOnUse" markerWidth="22" markerHeight="22" refX="18" refY="11" orient="auto">
+      <path d="M0,0 L22,11 L0,22 z" fill="#555"/>
+    </marker>
+  </defs>
+  <rect width="1500" height="930" fill="#fff"/>
+  <text x="40" y="48" font-family="Segoe UI, Arial" font-size="30" font-weight="700" fill="#222">9.2 · api.js — what happens inside apiFetch()</text>
+
+  <!-- 0 caller -->
+  <rect x="40" y="75" width="820" height="85" rx="12" fill="#f1f1f1" stroke="#888" stroke-width="2"/>
+  <text x="60" y="105" font-family="Segoe UI, Arial" font-size="20" font-weight="700" fill="#444">A component calls it (e.g. InitiativesPage)</text>
+  <text x="60" y="140" font-family="Consolas, monospace" font-size="19" fill="#222">apiFetch("/initiatives", { method: "POST", body: JSON.stringify(data) })</text>
+  <line x1="450" y1="160" x2="450" y2="192" stroke="#555" stroke-width="3" marker-end="url(#a)"/>
+
+  <!-- 1 token -->
+  <rect x="40" y="195" width="820" height="80" rx="12" fill="#eaf2ff" stroke="#1f6fd1" stroke-width="2"/>
+  <text x="60" y="225" font-family="Segoe UI, Arial" font-size="21" font-weight="700" fill="#1f6fd1">① Get the saved token</text>
+  <text x="60" y="258" font-family="Consolas, monospace" font-size="19" fill="#222">const token = localStorage.getItem("token")   <tspan fill="#777">// saved at login</tspan></text>
+  <line x1="450" y1="275" x2="450" y2="302" stroke="#555" stroke-width="3" marker-end="url(#a)"/>
+
+  <!-- 2 build -->
+  <rect x="40" y="305" width="820" height="150" rx="12" fill="#eaf2ff" stroke="#1f6fd1" stroke-width="2"/>
+  <text x="60" y="335" font-family="Segoe UI, Arial" font-size="21" font-weight="700" fill="#1f6fd1">② Build the request</text>
+  <g font-family="Consolas, monospace" font-size="19" fill="#222">
+    <text x="60" y="368">URL     = "http://localhost:8000" + "/initiatives"</text>
+    <text x="60" y="398">headers = Content-Type: application/json   <tspan fill="#777">// "I send JSON"</tspan></text>
+    <text x="60" y="428">          Authorization: Bearer &lt;token&gt;     <tspan fill="#777">// only if token exists</tspan></text>
+  </g>
+  <line x1="450" y1="455" x2="450" y2="482" stroke="#555" stroke-width="3" marker-end="url(#a)"/>
+
+  <!-- 3 send -->
+  <rect x="40" y="485" width="820" height="80" rx="12" fill="#f3ecff" stroke="#7b3fd1" stroke-width="2"/>
+  <text x="60" y="515" font-family="Segoe UI, Arial" font-size="21" font-weight="700" fill="#7b3fd1">③ Send it and WAIT for the answer</text>
+  <text x="60" y="548" font-family="Consolas, monospace" font-size="19" fill="#222">const res = await fetch(URL, { method, headers, body })  <tspan fill="#777">// → FastAPI</tspan></text>
+  <line x1="450" y1="565" x2="450" y2="592" stroke="#555" stroke-width="3" marker-end="url(#a)"/>
+
+  <!-- 4 check -->
+  <rect x="240" y="595" width="420" height="70" rx="35" fill="#fff6d6" stroke="#e0b100" stroke-width="3"/>
+  <text x="450" y="640" text-anchor="middle" font-family="Segoe UI, Arial" font-size="23" font-weight="700" fill="#222">④ res.ok ?  (status 200–299)</text>
+  <line x1="300" y1="665" x2="220" y2="712" stroke="#c0392b" stroke-width="3" marker-end="url(#a)"/>
+  <line x1="600" y1="665" x2="680" y2="712" stroke="#1e9e5a" stroke-width="3" marker-end="url(#a)"/>
+  <text x="200" y="695" font-family="Segoe UI, Arial" font-size="20" font-weight="700" fill="#c0392b">NO</text>
+  <text x="660" y="695" font-family="Segoe UI, Arial" font-size="20" font-weight="700" fill="#1e9e5a">YES</text>
+
+  <!-- NO branch -->
+  <rect x="40" y="715" width="400" height="180" rx="12" fill="#fdecea" stroke="#c0392b" stroke-width="2"/>
+  <text x="60" y="745" font-family="Segoe UI, Arial" font-size="20" font-weight="700" fill="#c0392b">401 / 403 / 404 / 422</text>
+  <g font-family="Consolas, monospace" font-size="17" fill="#222">
+    <text x="60" y="778">body = await res.json()</text>
+    <text x="60" y="805">msg  = body.detail</text>
+    <text x="60" y="832">throw new Error(msg)</text>
+  </g>
+  <text x="60" y="870" font-family="Segoe UI, Arial" font-size="17" fill="#c0392b">→ component's catch() shows the error</text>
+
+  <!-- YES branch -->
+  <rect x="460" y="715" width="400" height="180" rx="12" fill="#eafaf0" stroke="#1e9e5a" stroke-width="2"/>
+  <text x="480" y="745" font-family="Segoe UI, Arial" font-size="20" font-weight="700" fill="#1e9e5a">200 / 201 / 204</text>
+  <g font-family="Consolas, monospace" font-size="17" fill="#222">
+    <text x="480" y="778">204 (delete) → return null</text>
+    <text x="480" y="805"><tspan fill="#777">  (no body to read)</tspan></text>
+    <text x="480" y="832">else → return res.json()</text>
+  </g>
+  <text x="480" y="870" font-family="Segoe UI, Arial" font-size="17" fill="#1e9e5a">→ component gets the data</text>
+
+  <!-- RIGHT: network -->
+  <text x="900" y="100" font-family="Segoe UI, Arial" font-size="22" font-weight="700" fill="#222">What actually travels over the network</text>
+  <rect x="900" y="115" width="560" height="245" rx="10" fill="#1e2430"/>
+  <g font-family="Consolas, monospace" font-size="17" fill="#e6e6e6">
+    <text x="918" y="145" fill="#8ab4ff" font-weight="700">REQUEST  (React → FastAPI)</text>
+    <text x="918" y="178"><tspan fill="#ffcb6b">POST</tspan> /initiatives</text>
+    <text x="918" y="205">Host: localhost:8000</text>
+    <text x="918" y="232">Content-Type: application/json</text>
+    <text x="918" y="259"><tspan fill="#c3e88d">Authorization: Bearer eyJhbGciOi...</tspan></text>
+    <text x="918" y="300">{"name": "AI pilot",</text>
+    <text x="918" y="325"> "status": "planned", "budget": 500}</text>
+  </g>
+  <text x="900" y="385" font-family="Segoe UI, Arial" font-size="16" fill="#555">FastAPI: OAuth2PasswordBearer reads that Authorization header → get_current_user</text>
+
+  <rect x="900" y="405" width="560" height="190" rx="10" fill="#1e2430"/>
+  <g font-family="Consolas, monospace" font-size="17" fill="#e6e6e6">
+    <text x="918" y="435" fill="#8ab4ff" font-weight="700">RESPONSE  (FastAPI → React)</text>
+    <text x="918" y="468"><tspan fill="#c3e88d">201 Created</tspan>   ← res.ok = true</text>
+    <text x="918" y="495">{"id": 7, "name": "AI pilot", "owner_id": 1 ...}</text>
+    <text x="918" y="540"><tspan fill="#ff7b72">403 Forbidden</tspan> ← res.ok = false</text>
+    <text x="918" y="567">{"detail": "You can only change your own..."}</text>
+  </g>
+
+  <!-- RIGHT: interview -->
+  <rect x="900" y="620" width="560" height="275" rx="12" fill="#fff6d6" stroke="#e0b100" stroke-width="2"/>
+  <text x="920" y="655" font-family="Segoe UI, Arial" font-size="21" font-weight="700" fill="#222">⭐ Interview points</text>
+  <g font-family="Segoe UI, Arial" font-size="18" fill="#222">
+    <text x="920" y="690">1. fetch only THROWS if the network fails</text>
+    <text x="940" y="714">(server down, CORS blocked).</text>
+    <text x="920" y="744">2. A 403 / 404 is still a "successful" fetch →</text>
+    <text x="940" y="768">so WE must check res.ok and throw.</text>
+    <text x="920" y="798">3. One helper = token, headers, errors written ONCE;</text>
+    <text x="940" y="822">every component just calls apiFetch().</text>
+    <text x="920" y="852">4. FastAPI puts error text in "detail" →</text>
+    <text x="940" y="876">we show it to the user.</text>
+  </g>
+</svg>
