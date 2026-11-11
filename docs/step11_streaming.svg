@@ -1,0 +1,106 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1500" height="900" viewBox="0 0 1500 900">
+  <defs>
+    <marker id="k" markerUnits="userSpaceOnUse" markerWidth="18" markerHeight="18" refX="14" refY="9" orient="auto"><path d="M0,0 L18,9 L0,18 z" fill="#555"/></marker>
+  </defs>
+  <rect width="1500" height="900" fill="#fff"/>
+  <text x="40" y="45" font-family="Segoe UI, Arial" font-size="29" font-weight="700" fill="#222">Step 11 · Streaming — send the answer in pieces, show each piece immediately</text>
+
+  <!-- ===== A: normal vs streaming timelines ===== -->
+  <text x="40" y="90" font-family="Segoe UI, Arial" font-size="20" font-weight="700" fill="#444">A · Normal response vs streaming response (same 3-second answer)</text>
+  <g font-family="Segoe UI, Arial">
+    <text x="40" y="130" font-size="17" font-weight="700" fill="#c0392b">Normal (JSON)</text>
+    <rect x="200" y="112" width="1000" height="30" rx="4" fill="#f3f3f3" stroke="#ccc"/>
+    <text x="215" y="133" font-size="15" fill="#888">waiting... user sees nothing for 3 s ...</text>
+    <rect x="1200" y="112" width="260" height="30" rx="4" fill="#c0392b"/>
+    <text x="1212" y="133" font-size="15" fill="#fff" font-weight="700">ALL text at once</text>
+
+    <text x="40" y="190" font-size="17" font-weight="700" fill="#1e9e5a">Streaming</text>
+    <g font-size="14" fill="#fff" font-weight="700">
+      <rect x="200" y="172" width="70" height="30" rx="4" fill="#1e9e5a"/><text x="215" y="192">AI</text>
+      <rect x="280" y="172" width="80" height="30" rx="4" fill="#1e9e5a"/><text x="295" y="192">pilot</text>
+      <rect x="370" y="172" width="60" height="30" rx="4" fill="#1e9e5a"/><text x="385" y="192">is</text>
+      <rect x="440" y="172" width="110" height="30" rx="4" fill="#1e9e5a"/><text x="452" y="192">currently</text>
+      <rect x="560" y="172" width="100" height="30" rx="4" fill="#1e9e5a"/><text x="572" y="192">planned</text>
+      <rect x="670" y="172" width="70" height="30" rx="4" fill="#1e9e5a"/><text x="685" y="192">with</text>
+      <rect x="750" y="172" width="40" height="30" rx="4" fill="#1e9e5a"/><text x="762" y="192">a</text>
+    </g>
+    <text x="805" y="193" font-size="15" fill="#1e9e5a">... one word every 0.15 s → user starts reading after 0.02 s</text>
+    <text x="200" y="232" font-size="15" fill="#555">This is how ChatGPT / Claude type their answers live: the LLM produces tokens one by one, the server forwards each one.</text>
+  </g>
+
+  <!-- ===== B: backend ===== -->
+  <rect x="40" y="260" width="700" height="430" rx="12" fill="#1e2430"/>
+  <rect x="40" y="260" width="700" height="42" rx="12" fill="#555"/><rect x="40" y="285" width="700" height="17" fill="#555"/>
+  <text x="58" y="289" font-family="Segoe UI, Arial" font-size="19" font-weight="700" fill="#fff">B · FastAPI — routers/initiatives.py</text>
+  <rect x="48" y="369" width="684" height="26" rx="4" fill="#c0392b" opacity="0.45"/>
+  <rect x="48" y="397" width="684" height="80" rx="4" fill="#1e9e5a" opacity="0.4"/>
+  <rect x="48" y="481" width="684" height="26" rx="4" fill="#e0b100" opacity="0.35"/>
+  <rect x="48" y="537" width="684" height="26" rx="4" fill="#1f6fd1" opacity="0.55"/>
+  <g font-family="Consolas, monospace" font-size="15" fill="#e6e6e6">
+    <text x="60" y="330">@router.get("/{initiative_id}/summary")</text>
+    <text x="60" y="358"><tspan fill="#c792ea">def</tspan> stream_summary(initiative_id: int, db: DB):</text>
+    <text x="80" y="358" dy="28">initiative = service.get_initiative(db, id)  <tspan fill="#ffd1cc"># 404 first</tspan></text>
+    <text x="80" y="414">text = service.build_summary(initiative)</text>
+    <text x="80" y="442"><tspan fill="#c792ea">def</tspan> word_stream():            <tspan fill="#c3e88d"># a generator</tspan></text>
+    <text x="100" y="470"><tspan fill="#c792ea">for</tspan> word <tspan fill="#c792ea">in</tspan> text.split(" "):</text>
+    <text x="120" y="498"><tspan fill="#ffcb6b" font-weight="700">yield</tspan> word + " "     <tspan fill="#c3e88d"># send ONE piece</tspan></text>
+    <text x="120" y="526">time.sleep(0.15)       <tspan fill="#7f8796"># fake "AI thinking"</tspan></text>
+    <text x="80" y="554"><tspan fill="#c792ea">return</tspan> <tspan fill="#8ab4ff" font-weight="700">StreamingResponse</tspan>(word_stream(), media_type="text/plain")</text>
+  </g>
+  <g font-family="Segoe UI, Arial" font-size="15" fill="#e6e6e6">
+    <text x="60" y="600"><tspan fill="#ffd1cc" font-weight="700">red</tspan>: checks + DB work happen BEFORE streaming (404/401 still normal)</text>
+    <text x="60" y="626"><tspan fill="#ffcb6b" font-weight="700">yield</tspan>: pauses the function, hands one piece out, then continues</text>
+    <text x="60" y="652"><tspan fill="#8ab4ff" font-weight="700">StreamingResponse</tspan>: sends each yielded piece to the client right away</text>
+    <text x="60" y="678" fill="#aaa">A real app: replace the loop with the LLM SDK's stream and yield each token.</text>
+  </g>
+
+  <!-- ===== C: React ===== -->
+  <rect x="760" y="260" width="700" height="430" rx="12" fill="#1e2430"/>
+  <rect x="760" y="260" width="700" height="42" rx="12" fill="#1f6fd1"/><rect x="760" y="285" width="700" height="17" fill="#1f6fd1"/>
+  <text x="778" y="289" font-family="Segoe UI, Arial" font-size="19" font-weight="700" fill="#fff">C · React — components/Summary.jsx</text>
+  <rect x="768" y="369" width="684" height="26" rx="4" fill="#1e9e5a" opacity="0.45"/>
+  <rect x="768" y="453" width="684" height="26" rx="4" fill="#e0b100" opacity="0.35"/>
+  <rect x="768" y="509" width="684" height="26" rx="4" fill="#1f6fd1" opacity="0.55"/>
+  <g font-family="Consolas, monospace" font-size="15" fill="#e6e6e6">
+    <text x="780" y="330">const res = <tspan fill="#c792ea">await</tspan> fetch(`.../initiatives/${id}/summary`,</text>
+    <text x="800" y="358">{ headers: { Authorization: `Bearer ${token}` } });</text>
+    <text x="780" y="386">const reader  = res.body.getReader();   <tspan fill="#c3e88d">// read in chunks</tspan></text>
+    <text x="780" y="414">const decoder = <tspan fill="#c792ea">new</tspan> TextDecoder();        <tspan fill="#7f8796">// bytes → text</tspan></text>
+    <text x="780" y="442"><tspan fill="#c792ea">while</tspan> (true) {</text>
+    <text x="800" y="470">const { done, value } = <tspan fill="#ffcb6b" font-weight="700">await reader.read()</tspan>;</text>
+    <text x="800" y="498"><tspan fill="#c792ea">if</tspan> (done) <tspan fill="#c792ea">break</tspan>;                 <tspan fill="#7f8796">// server finished</tspan></text>
+    <text x="800" y="526">setText(prev =&gt; prev + decoder.decode(value));</text>
+    <text x="780" y="554">}</text>
+  </g>
+  <g font-family="Segoe UI, Arial" font-size="15" fill="#e6e6e6">
+    <text x="780" y="600"><tspan fill="#c3e88d" font-weight="700">getReader()</tspan>: don't wait for the whole body (no res.json())</text>
+    <text x="780" y="626"><tspan fill="#ffcb6b" font-weight="700">reader.read()</tspan>: waits for the NEXT chunk → {done, value}</text>
+    <text x="780" y="652"><tspan fill="#8ab4ff" font-weight="700">setText(prev + chunk)</tspan>: each chunk → re-render → text grows</text>
+    <text x="780" y="678" fill="#aaa">Not apiFetch: it calls res.json(), which waits for everything.</text>
+  </g>
+
+  <!-- ===== D: pipe ===== -->
+  <rect x="40" y="715" width="1420" height="165" rx="12" fill="#f7f7f7" stroke="#bbb" stroke-width="2"/>
+  <text x="60" y="747" font-family="Segoe UI, Arial" font-size="20" font-weight="700" fill="#444">D · One HTTP response that stays open — pieces flow through it</text>
+  <g font-family="Segoe UI, Arial" font-size="15">
+    <rect x="60" y="765" width="250" height="90" rx="10" fill="#555"/>
+    <text x="75" y="795" fill="#fff" font-weight="700">generator</text>
+    <text x="75" y="820" fill="#fff">yield "AI "</text>
+    <text x="75" y="842" fill="#fff">yield "pilot " ...</text>
+    <line x1="312" y1="810" x2="378" y2="810" stroke="#555" stroke-width="3" marker-end="url(#k)"/>
+    <rect x="380" y="765" width="250" height="90" rx="10" fill="#8ab4ff"/>
+    <text x="395" y="795" fill="#1e2430" font-weight="700">StreamingResponse</text>
+    <text x="395" y="820" fill="#1e2430">sends each piece now</text>
+    <text x="395" y="842" fill="#1e2430">(connection stays open)</text>
+    <line x1="632" y1="810" x2="698" y2="810" stroke="#555" stroke-width="3" marker-end="url(#k)"/>
+    <rect x="700" y="765" width="250" height="90" rx="10" fill="#e0b100"/>
+    <text x="715" y="795" fill="#fff" font-weight="700">reader.read() loop</text>
+    <text x="715" y="820" fill="#fff">gets "AI ", then "pilot "</text>
+    <text x="715" y="842" fill="#fff">until done = true</text>
+    <line x1="952" y1="810" x2="1018" y2="810" stroke="#555" stroke-width="3" marker-end="url(#k)"/>
+    <rect x="1020" y="765" width="420" height="90" rx="10" fill="#fff" stroke="#999"/>
+    <text x="1035" y="793" font-weight="700" fill="#222">Screen</text>
+    <rect x="1035" y="805" width="90" height="28" rx="4" fill="#bbb"/><text x="1045" y="824" fill="#fff" font-weight="700" font-size="13">Writing...</text>
+    <text x="1135" y="824" fill="#222">AI pilot is currently planned▌</text>
+  </g>
+</svg>
