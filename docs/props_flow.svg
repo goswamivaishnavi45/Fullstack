@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1500" height="900" viewBox="0 0 1500 900">
+  <defs>
+    <marker id="down" markerUnits="userSpaceOnUse" markerWidth="26" markerHeight="26" refX="20" refY="13" orient="auto">
+      <path d="M0,0 L26,13 L0,26 z" fill="#1f6fd1"/>
+    </marker>
+    <marker id="up" markerUnits="userSpaceOnUse" markerWidth="26" markerHeight="26" refX="20" refY="13" orient="auto">
+      <path d="M0,0 L26,13 L0,26 z" fill="#d35400"/>
+    </marker>
+  </defs>
+  <rect width="1500" height="900" fill="#ffffff"/>
+
+  <!-- title -->
+  <text x="40" y="50" font-family="Segoe UI, Arial" font-size="30" font-weight="700" fill="#222">Props: how the PARENT gives a function to the CHILD</text>
+
+  <!-- ===== PARENT ===== -->
+  <rect x="40" y="80" width="1080" height="320" rx="16" fill="#eaf2ff" stroke="#1f6fd1" stroke-width="3"/>
+  <rect x="40" y="80" width="1080" height="50" rx="16" fill="#1f6fd1"/>
+  <rect x="40" y="110" width="1080" height="20" fill="#1f6fd1"/>
+  <text x="60" y="114" font-family="Segoe UI, Arial" font-size="24" font-weight="700" fill="#fff">PARENT  ·  InitiativesPage.jsx   (owns the list)</text>
+  <g font-family="Consolas, monospace" font-size="21" fill="#1a1a1a">
+    <text x="70" y="170">const [items, setItems] = useState([ ... ])      <tspan fill="#777">// the list lives HERE</tspan></text>
+    <text x="70" y="210">function handleCreate(newData) {</text>
+    <text x="110" y="245">const created = await apiFetch("/initiatives", POST newData)</text>
+    <text x="110" y="280">setItems(prev =&gt; [...prev, created])   <tspan fill="#d35400" font-weight="700">③ list updates on screen</tspan></text>
+    <text x="70" y="315">}</text>
+    <text x="70" y="365">return  &lt;InitiativeForm <tspan fill="#1f6fd1" font-weight="700">onCreate={handleCreate}</tspan> /&gt;</text>
+  </g>
+  <rect x="330" y="340" width="278" height="38" rx="6" fill="none" stroke="#1f6fd1" stroke-width="2" stroke-dasharray="6 4"/>
+
+  <!-- ===== arrows ===== -->
+  <line x1="480" y1="382" x2="480" y2="528" stroke="#1f6fd1" stroke-width="5" marker-end="url(#down)"/>
+  <text x="500" y="440" font-family="Segoe UI, Arial" font-size="22" font-weight="700" fill="#1f6fd1">① PROP goes DOWN</text>
+  <text x="500" y="470" font-family="Segoe UI, Arial" font-size="19" fill="#1f6fd1">"here is my function, call it onCreate"</text>
+
+  <line x1="900" y1="545" x2="900" y2="290" stroke="#d35400" stroke-width="5" marker-end="url(#up)"/>
+  <text x="920" y="440" font-family="Segoe UI, Arial" font-size="22" font-weight="700" fill="#d35400">② child CALLS it</text>
+  <text x="920" y="470" font-family="Segoe UI, Arial" font-size="19" fill="#d35400">data goes UP to parent</text>
+
+  <!-- ===== CHILD ===== -->
+  <rect x="40" y="540" width="1080" height="240" rx="16" fill="#eafaf0" stroke="#1e9e5a" stroke-width="3"/>
+  <rect x="40" y="540" width="1080" height="50" rx="16" fill="#1e9e5a"/>
+  <rect x="40" y="570" width="1080" height="20" fill="#1e9e5a"/>
+  <text x="60" y="574" font-family="Segoe UI, Arial" font-size="24" font-weight="700" fill="#fff">CHILD  ·  InitiativeForm.jsx   (owns only what you type)</text>
+  <g font-family="Consolas, monospace" font-size="21" fill="#1a1a1a">
+    <text x="70" y="630">function InitiativeForm({ <tspan fill="#1f6fd1" font-weight="700">onCreate</tspan> }) {     <tspan fill="#777">// receives the prop</tspan></text>
+    <text x="110" y="668">const [name, setName] = useState("")      <tspan fill="#777">// typed text</tspan></text>
+    <text x="110" y="706">on "Add" click:  <tspan fill="#d35400" font-weight="700">onCreate({ name, status, budget })</tspan></text>
+    <text x="70" y="744">}</text>
+  </g>
+
+  <!-- ===== SCREEN MOCK ===== -->
+  <text x="1160" y="110" font-family="Segoe UI, Arial" font-size="22" font-weight="700" fill="#222">What you SEE in the browser</text>
+  <rect x="1160" y="130" width="300" height="420" rx="10" fill="#eaf2ff" stroke="#1f6fd1" stroke-width="3"/>
+  <text x="1175" y="158" font-family="Segoe UI, Arial" font-size="15" font-weight="700" fill="#1f6fd1">PARENT (InitiativesPage)</text>
+  <text x="1175" y="195" font-family="Segoe UI, Arial" font-size="24" font-weight="700" fill="#222">Initiatives</text>
+  <!-- form = child -->
+  <rect x="1175" y="215" width="270" height="120" rx="8" fill="#eafaf0" stroke="#1e9e5a" stroke-width="3"/>
+  <text x="1188" y="238" font-family="Segoe UI, Arial" font-size="15" font-weight="700" fill="#1e9e5a">CHILD (InitiativeForm)</text>
+  <rect x="1188" y="250" width="120" height="30" fill="#fff" stroke="#999"/>
+  <text x="1196" y="271" font-family="Segoe UI, Arial" font-size="15" fill="#555">AI pilot</text>
+  <rect x="1316" y="250" width="55" height="30" fill="#fff" stroke="#999"/>
+  <text x="1324" y="271" font-family="Segoe UI, Arial" font-size="15" fill="#555">500</text>
+  <rect x="1188" y="290" width="100" height="30" fill="#fff" stroke="#999"/>
+  <text x="1196" y="311" font-family="Segoe UI, Arial" font-size="15" fill="#555">planned ▾</text>
+  <rect x="1300" y="290" width="70" height="30" rx="4" fill="#d35400"/>
+  <text x="1318" y="311" font-family="Segoe UI, Arial" font-size="15" font-weight="700" fill="#fff">Add</text>
+  <!-- list rows -->
+  <text x="1175" y="365" font-family="Segoe UI, Arial" font-size="14" fill="#1f6fd1">list = items (parent's state)</text>
+  <rect x="1175" y="375" width="270" height="40" rx="6" fill="#fff" stroke="#ccc"/>
+  <text x="1185" y="401" font-family="Segoe UI, Arial" font-size="15" fill="#222">Data lake · active · 900</text>
+  <rect x="1175" y="423" width="270" height="40" rx="6" fill="#fff" stroke="#ccc"/>
+  <text x="1185" y="449" font-family="Segoe UI, Arial" font-size="15" fill="#222">CRM revamp · done · 300</text>
+  <rect x="1175" y="471" width="270" height="40" rx="6" fill="#fff8f0" stroke="#d35400" stroke-width="2"/>
+  <text x="1185" y="497" font-family="Segoe UI, Arial" font-size="15" font-weight="700" fill="#d35400">AI pilot · planned · 500  ← new ③</text>
+
+  <text x="1160" y="590" font-family="Segoe UI, Arial" font-size="17" fill="#333">The form box sits INSIDE</text>
+  <text x="1160" y="614" font-family="Segoe UI, Arial" font-size="17" fill="#333">the page box: that is why</text>
+  <text x="1160" y="638" font-family="Segoe UI, Arial" font-size="17" fill="#333">page = parent, form = child.</text>
+  <text x="1160" y="680" font-family="Segoe UI, Arial" font-size="17" fill="#333">Click "Add" → ② → ③ →</text>
+  <text x="1160" y="704" font-family="Segoe UI, Arial" font-size="17" fill="#333">new row appears, no reload.</text>
+
+  <!-- ===== rule ===== -->
+  <rect x="40" y="810" width="1420" height="60" rx="10" fill="#fff6d6" stroke="#e0b100" stroke-width="2"/>
+  <text x="60" y="848" font-family="Segoe UI, Arial" font-size="22" fill="#222"><tspan font-weight="700">Rule:</tspan>  data &amp; functions flow <tspan fill="#1f6fd1" font-weight="700">DOWN</tspan> as props  ·  events flow <tspan fill="#d35400" font-weight="700">UP</tspan> when the child calls that function  ·  child never changes parent state directly</text>
+</svg>
