@@ -1,0 +1,142 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1500" height="1130" viewBox="0 0 1500 1130">
+  <defs>
+    <marker id="a" markerUnits="userSpaceOnUse" markerWidth="20" markerHeight="20" refX="16" refY="10" orient="auto">
+      <path d="M0,0 L20,10 L0,20 z" fill="#1f6fd1"/>
+    </marker>
+    <marker id="k" markerUnits="userSpaceOnUse" markerWidth="18" markerHeight="18" refX="14" refY="9" orient="auto">
+      <path d="M0,0 L18,9 L0,18 z" fill="#555"/>
+    </marker>
+    <marker id="gr" markerUnits="userSpaceOnUse" markerWidth="18" markerHeight="18" refX="14" refY="9" orient="auto">
+      <path d="M0,0 L18,9 L0,18 z" fill="#1e9e5a"/>
+    </marker>
+    <marker id="rd" markerUnits="userSpaceOnUse" markerWidth="18" markerHeight="18" refX="14" refY="9" orient="auto">
+      <path d="M0,0 L18,9 L0,18 z" fill="#c0392b"/>
+    </marker>
+  </defs>
+  <rect width="1500" height="1130" fill="#fff"/>
+  <text x="40" y="45" font-family="Segoe UI, Arial" font-size="29" font-weight="700" fill="#222">9.4 · InitiativeForm — controlled inputs and what happens when you click "Add"</text>
+
+  <!-- ===== A: CONTROLLED INPUT LOOP ===== -->
+  <text x="40" y="90" font-family="Segoe UI, Arial" font-size="20" font-weight="700" fill="#444">A · Controlled input = a loop that runs on EVERY keystroke</text>
+
+  <g font-family="Segoe UI, Arial">
+    <!-- 1 top-left -->
+    <rect x="40" y="110" width="320" height="120" rx="12" fill="#f7f7f7" stroke="#999" stroke-width="2"/>
+    <text x="58" y="140" font-size="18" font-weight="700" fill="#222">① You type a letter</text>
+    <rect x="58" y="158" width="220" height="34" rx="4" fill="#fff" stroke="#1f6fd1" stroke-width="2"/>
+    <text x="68" y="182" font-size="17" fill="#222">AI p<tspan fill="#1f6fd1" font-weight="700">|</tspan></text>
+    <text x="58" y="215" font-size="14" fill="#555">you pressed "p"</text>
+    <!-- 2 top-right -->
+    <rect x="420" y="110" width="320" height="120" rx="12" fill="#f3ecff" stroke="#7b3fd1" stroke-width="2"/>
+    <text x="438" y="140" font-size="18" font-weight="700" fill="#7b3fd1">② onChange fires</text>
+    <text x="438" y="172" font-family="Consolas, monospace" font-size="15" fill="#222">onChange={(e) =&gt;</text>
+    <text x="458" y="194" font-family="Consolas, monospace" font-size="15" fill="#222">setName(e.target.value)}</text>
+    <text x="438" y="218" font-size="14" fill="#555">e.target.value = "AI p" (the new text)</text>
+    <!-- 3 bottom-right -->
+    <rect x="420" y="300" width="320" height="120" rx="12" fill="#fff6d6" stroke="#e0b100" stroke-width="2"/>
+    <text x="438" y="330" font-size="18" font-weight="700" fill="#b08a00">③ State is updated</text>
+    <rect x="438" y="348" width="200" height="32" rx="6" fill="#e0b100"/>
+    <text x="450" y="370" font-family="Consolas, monospace" font-size="16" fill="#fff">name = "AI p"</text>
+    <text x="438" y="405" font-size="14" fill="#555">setName → React will re-render</text>
+    <!-- 4 bottom-left -->
+    <rect x="40" y="300" width="320" height="120" rx="12" fill="#eaf2ff" stroke="#1f6fd1" stroke-width="2"/>
+    <text x="58" y="330" font-size="18" font-weight="700" fill="#1f6fd1">④ Re-render shows state</text>
+    <text x="58" y="362" font-family="Consolas, monospace" font-size="15" fill="#222">&lt;input value={name} /&gt;</text>
+    <text x="58" y="390" font-size="14" fill="#555">the box shows whatever name is</text>
+    <text x="58" y="410" font-size="14" fill="#555">→ ready for the next key</text>
+  </g>
+  <line x1="362" y1="170" x2="414" y2="170" stroke="#1f6fd1" stroke-width="3.5" marker-end="url(#a)"/>
+  <line x1="580" y1="232" x2="580" y2="294" stroke="#1f6fd1" stroke-width="3.5" marker-end="url(#a)"/>
+  <line x1="418" y1="360" x2="366" y2="360" stroke="#1f6fd1" stroke-width="3.5" marker-end="url(#a)"/>
+  <line x1="200" y1="298" x2="200" y2="236" stroke="#1f6fd1" stroke-width="3.5" marker-end="url(#a)"/>
+  <text x="250" y="270" font-family="Segoe UI, Arial" font-size="16" font-weight="700" fill="#1f6fd1">repeats every key</text>
+
+  <!-- right: why -->
+  <rect x="790" y="110" width="670" height="310" rx="12" fill="#eafaf0" stroke="#1e9e5a" stroke-width="2"/>
+  <text x="810" y="142" font-family="Segoe UI, Arial" font-size="20" font-weight="700" fill="#1e9e5a">Why "controlled"? State is the single source of truth</text>
+  <g font-family="Segoe UI, Arial" font-size="16" fill="#222">
+    <text x="810" y="176">The box never holds its own value — it always shows <tspan font-weight="700">state</tspan>.</text>
+    <text x="810" y="204">So React always knows what's typed. That lets you:</text>
+    <text x="830" y="236">✔ <tspan font-weight="700">read</tspan> it anytime → just use <tspan font-family="Consolas, monospace">name</tspan> (no document.getElementById)</text>
+    <text x="830" y="264">✔ <tspan font-weight="700">clear</tspan> it → <tspan font-family="Consolas, monospace">setName("")</tspan> and the box empties</text>
+    <text x="830" y="292">✔ <tspan font-weight="700">validate / disable</tspan> → e.g. button off while saving</text>
+  </g>
+  <text x="810" y="330" font-family="Segoe UI, Arial" font-size="16" font-weight="700" fill="#c0392b">Forget onChange?</text>
+  <text x="810" y="354" font-family="Segoe UI, Arial" font-size="15" fill="#222">value={name} with no onChange → box is <tspan font-weight="700">frozen</tspan>, you can't type</text>
+  <text x="810" y="378" font-family="Segoe UI, Arial" font-size="15" fill="#222">(state never changes, so the box keeps showing the old value)</text>
+  <text x="810" y="405" font-family="Segoe UI, Arial" font-size="14" fill="#555">Same pattern for all 3 fields: name, budget, status (&lt;select&gt;) — lines 33–35</text>
+
+  <!-- ===== B: SUBMIT FLOW ===== -->
+  <text x="40" y="475" font-family="Segoe UI, Arial" font-size="20" font-weight="700" fill="#444">B · You click "Add" → handleSubmit(e) runs, step by step</text>
+
+  <g font-family="Segoe UI, Arial">
+    <rect x="40" y="492" width="270" height="150" rx="12" fill="#f7f7f7" stroke="#999" stroke-width="2"/>
+    <text x="56" y="522" font-size="17" font-weight="700" fill="#222">① Stop page reload</text>
+    <text x="56" y="552" font-family="Consolas, monospace" font-size="15" fill="#222">e.preventDefault()</text>
+    <text x="56" y="580" font-size="14" fill="#555">a normal HTML form reloads</text>
+    <text x="56" y="600" font-size="14" fill="#555">the page → all state lost.</text>
+    <text x="56" y="620" font-size="14" fill="#555">This stops that.</text>
+
+    <rect x="335" y="492" width="270" height="150" rx="12" fill="#fff6d6" stroke="#e0b100" stroke-width="2"/>
+    <text x="351" y="522" font-size="17" font-weight="700" fill="#b08a00">② Prepare</text>
+    <text x="351" y="552" font-family="Consolas, monospace" font-size="15" fill="#222">setError(null)</text>
+    <text x="351" y="576" font-family="Consolas, monospace" font-size="15" fill="#222">setSaving(true)</text>
+    <rect x="351" y="592" width="110" height="32" rx="4" fill="#bbb"/>
+    <text x="362" y="613" font-size="14" fill="#fff" font-weight="700">Saving...</text>
+    <text x="470" y="613" font-size="13" fill="#555">disabled →</text>
+    <text x="470" y="630" font-size="13" fill="#555">no double click</text>
+
+    <rect x="630" y="492" width="420" height="150" rx="12" fill="#f3ecff" stroke="#7b3fd1" stroke-width="2"/>
+    <text x="646" y="522" font-size="17" font-weight="700" fill="#7b3fd1">③ Hand the data to the PARENT (prop)</text>
+    <text x="646" y="552" font-family="Consolas, monospace" font-size="15" fill="#222">await onCreate({ name, status,</text>
+    <text x="646" y="574" font-family="Consolas, monospace" font-size="15" fill="#222">                 budget: Number(budget) })</text>
+    <text x="646" y="602" font-size="14" fill="#555">Number(): input values are always TEXT ("500")</text>
+    <text x="646" y="624" font-size="14" fill="#555">→ backend wants a number (500)</text>
+
+    <rect x="1075" y="492" width="385" height="150" rx="12" fill="#eaf2ff" stroke="#1f6fd1" stroke-width="2"/>
+    <text x="1091" y="522" font-size="17" font-weight="700" fill="#1f6fd1">Parent: handleCreate (props image)</text>
+    <text x="1091" y="552" font-family="Consolas, monospace" font-size="14" fill="#222">apiFetch("/initiatives", POST)</text>
+    <text x="1091" y="576" font-family="Consolas, monospace" font-size="14" fill="#222">→ FastAPI → DB → 201</text>
+    <text x="1091" y="600" font-family="Consolas, monospace" font-size="14" fill="#222">setItems(prev =&gt; [...prev, created])</text>
+    <text x="1091" y="624" font-size="14" fill="#555">or api.js THROWS (401 / 422) ↓</text>
+  </g>
+  <line x1="312" y1="567" x2="330" y2="567" stroke="#555" stroke-width="3" marker-end="url(#k)"/>
+  <line x1="607" y1="567" x2="625" y2="567" stroke="#555" stroke-width="3" marker-end="url(#k)"/>
+  <line x1="1052" y1="567" x2="1070" y2="567" stroke="#555" stroke-width="3" marker-end="url(#k)"/>
+
+  <!-- branches -->
+  <line x1="1200" y1="644" x2="560" y2="712" stroke="#1e9e5a" stroke-width="3" marker-end="url(#gr)"/>
+  <line x1="1270" y1="644" x2="1110" y2="712" stroke="#c0392b" stroke-width="3" marker-end="url(#rd)"/>
+  <text x="760" y="672" font-family="Segoe UI, Arial" font-size="16" font-weight="700" fill="#1e9e5a">no error</text>
+  <text x="1205" y="690" font-family="Segoe UI, Arial" font-size="16" font-weight="700" fill="#c0392b">error thrown</text>
+
+  <g font-family="Segoe UI, Arial">
+    <rect x="300" y="715" width="520" height="150" rx="12" fill="#eafaf0" stroke="#1e9e5a" stroke-width="2"/>
+    <text x="318" y="745" font-size="17" font-weight="700" fill="#1e9e5a">④a try → success: clear the form</text>
+    <text x="318" y="775" font-family="Consolas, monospace" font-size="15" fill="#222">setName("");  setBudget(0);  setStatus("planned");</text>
+    <text x="318" y="805" font-size="14" fill="#555">controlled inputs → setting state empties the boxes</text>
+    <text x="318" y="828" font-size="14" fill="#555">the new row is already in the list (parent did setItems)</text>
+    <text x="318" y="851" font-size="14" fill="#555">cleared ONLY after success — so a failure keeps your typing</text>
+
+    <rect x="860" y="715" width="600" height="150" rx="12" fill="#fdecea" stroke="#c0392b" stroke-width="2"/>
+    <text x="878" y="745" font-size="17" font-weight="700" fill="#c0392b">④b catch → show the error under the form</text>
+    <text x="878" y="775" font-family="Consolas, monospace" font-size="15" fill="#222">catch (err) { setError(err.message) }</text>
+    <rect x="878" y="792" width="300" height="28" rx="4" fill="#fff" stroke="#999"/>
+    <text x="886" y="812" font-size="14" fill="#222">AI pilot</text>
+    <text x="878" y="845" font-size="15" fill="#c0392b">Not authenticated   ← {error &amp;&amp; &lt;p&gt;...&lt;/p&gt;}</text>
+  </g>
+
+  <line x1="560" y1="867" x2="700" y2="912" stroke="#555" stroke-width="3" marker-end="url(#k)"/>
+  <line x1="1110" y1="867" x2="900" y2="912" stroke="#555" stroke-width="3" marker-end="url(#k)"/>
+  <rect x="560" y="915" width="460" height="90" rx="12" fill="#f7f7f7" stroke="#555" stroke-width="2"/>
+  <text x="578" y="945" font-family="Segoe UI, Arial" font-size="17" font-weight="700" fill="#222">⑤ finally → ALWAYS runs</text>
+  <text x="578" y="973" font-family="Consolas, monospace" font-size="15" fill="#222">setSaving(false)</text>
+  <rect x="760" y="955" width="70" height="30" rx="4" fill="#d35400"/>
+  <text x="778" y="976" font-family="Segoe UI, Arial" font-size="14" font-weight="700" fill="#fff">Add</text>
+  <text x="840" y="976" font-family="Segoe UI, Arial" font-size="14" fill="#555">button is back</text>
+
+  <!-- interview strip -->
+  <rect x="40" y="1030" width="1420" height="80" rx="10" fill="#fff6d6" stroke="#e0b100" stroke-width="2"/>
+  <text x="60" y="1062" font-family="Segoe UI, Arial" font-size="18" fill="#222"><tspan font-weight="700">⭐ Interview line:</tspan> "Inputs are controlled — value comes from state, onChange updates state. On submit I preventDefault,</text>
+  <text x="60" y="1090" font-family="Segoe UI, Arial" font-size="18" fill="#222">disable the button, call the parent's onCreate prop, clear on success, show the error on failure, and re-enable in finally."</text>
+</svg>
