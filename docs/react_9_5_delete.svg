@@ -1,0 +1,146 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1500" height="1150" viewBox="0 0 1500 1150">
+  <defs>
+    <marker id="k" markerUnits="userSpaceOnUse" markerWidth="18" markerHeight="18" refX="14" refY="9" orient="auto"><path d="M0,0 L18,9 L0,18 z" fill="#555"/></marker>
+    <marker id="gr" markerUnits="userSpaceOnUse" markerWidth="18" markerHeight="18" refX="14" refY="9" orient="auto"><path d="M0,0 L18,9 L0,18 z" fill="#1e9e5a"/></marker>
+    <marker id="rd" markerUnits="userSpaceOnUse" markerWidth="18" markerHeight="18" refX="14" refY="9" orient="auto"><path d="M0,0 L18,9 L0,18 z" fill="#c0392b"/></marker>
+  </defs>
+  <rect width="1500" height="1150" fill="#fff"/>
+  <text x="40" y="45" font-family="Segoe UI, Arial" font-size="29" font-weight="700" fill="#222">9.5 · Delete — click → confirm → DELETE request → update the list</text>
+
+  <!-- ===== CODE PANEL ===== -->
+  <rect x="40" y="70" width="640" height="370" rx="12" fill="#1e2430"/>
+  <rect x="40" y="70" width="640" height="42" rx="12" fill="#1f6fd1"/><rect x="40" y="95" width="640" height="17" fill="#1f6fd1"/>
+  <text x="58" y="99" font-family="Segoe UI, Arial" font-size="19" font-weight="700" fill="#fff">InitiativesPage.jsx — the delete code</text>
+  <rect x="48" y="135" width="624" height="26" rx="4" fill="#888" opacity="0.35"/>
+  <rect x="48" y="163" width="624" height="26" rx="4" fill="#e0b100" opacity="0.45"/>
+  <rect x="48" y="219" width="624" height="26" rx="4" fill="#7b3fd1" opacity="0.55"/>
+  <rect x="48" y="247" width="624" height="26" rx="4" fill="#1e9e5a" opacity="0.55"/>
+  <rect x="48" y="303" width="624" height="26" rx="4" fill="#c0392b" opacity="0.55"/>
+  <rect x="48" y="387" width="624" height="26" rx="4" fill="#1f6fd1" opacity="0.6"/>
+  <g font-family="Consolas, monospace" font-size="14" fill="#7f8796">
+    <text x="54" y="153">31</text><text x="54" y="181">32</text><text x="54" y="209">33</text><text x="54" y="237">34</text>
+    <text x="54" y="265">35</text><text x="54" y="293">36</text><text x="54" y="321">37</text><text x="54" y="349">38</text>
+    <text x="54" y="377">39</text><text x="54" y="405">60</text>
+  </g>
+  <g font-family="Consolas, monospace" font-size="14" fill="#e6e6e6">
+    <text x="88" y="153"><tspan fill="#c792ea">async function</tspan> handleDelete(id) {</text>
+    <text x="108" y="181"><tspan fill="#c792ea">if</tspan> (!window.confirm("Delete this initiative?")) <tspan fill="#c792ea">return</tspan>;</text>
+    <text x="108" y="209"><tspan fill="#c792ea">try</tspan> {</text>
+    <text x="128" y="237"><tspan fill="#c792ea">await</tspan> apiFetch(`/initiatives/${id}`, { method: "DELETE" });</text>
+    <text x="128" y="265">setItems((prev) =&gt; prev.filter((item) =&gt; item.id !== id));</text>
+    <text x="108" y="293">} <tspan fill="#c792ea">catch</tspan> (err) {</text>
+    <text x="128" y="321">alert(err.message);</text>
+    <text x="108" y="349">}</text>
+    <text x="88" y="377">}</text>
+    <text x="88" y="405">&lt;button onClick={() =&gt; handleDelete(item.id)}&gt;Delete&lt;/button&gt;</text>
+  </g>
+  <g font-family="Segoe UI, Arial" font-size="14" font-weight="700" fill="#fff" text-anchor="middle">
+    <circle cx="655" cy="176" r="13" fill="#e0b100"/><text x="655" y="181">2</text>
+    <circle cx="655" cy="232" r="13" fill="#7b3fd1"/><text x="655" y="237">3</text>
+    <circle cx="655" cy="260" r="13" fill="#1e9e5a"/><text x="655" y="265">4a</text>
+    <circle cx="655" cy="316" r="13" fill="#c0392b"/><text x="655" y="321">4b</text>
+    <circle cx="655" cy="400" r="13" fill="#1f6fd1"/><text x="655" y="405">1</text>
+  </g>
+
+  <rect x="40" y="460" width="640" height="100" rx="12" fill="#fff6d6" stroke="#e0b100" stroke-width="2"/>
+  <text x="58" y="490" font-family="Segoe UI, Arial" font-size="18" font-weight="700" fill="#222">⭐ Remove the row only AFTER the server says OK</text>
+  <text x="58" y="518" font-family="Segoe UI, Arial" font-size="15" fill="#222">setItems is on the line AFTER await apiFetch. If the server refuses (403),</text>
+  <text x="58" y="542" font-family="Segoe UI, Arial" font-size="15" fill="#222">apiFetch throws → setItems is SKIPPED → the screen still matches the DB.</text>
+
+  <!-- ===== FLOW ===== -->
+  <g font-family="Segoe UI, Arial">
+    <rect x="720" y="70" width="740" height="75" rx="12" fill="#eaf2ff" stroke="#1f6fd1" stroke-width="2"/>
+    <circle cx="745" cy="100" r="14" fill="#1f6fd1"/><text x="745" y="105" text-anchor="middle" font-size="14" font-weight="700" fill="#fff">1</text>
+    <text x="770" y="106" font-size="18" font-weight="700" fill="#1f6fd1">Click "Delete" on the row "Data lake" (id 2)</text>
+    <text x="770" y="132" font-size="15" fill="#222">onClick runs the arrow function → <tspan font-family="Consolas, monospace">handleDelete(2)</tspan></text>
+
+    <rect x="720" y="160" width="740" height="95" rx="12" fill="#fff6d6" stroke="#e0b100" stroke-width="2"/>
+    <circle cx="745" cy="190" r="14" fill="#e0b100"/><text x="745" y="195" text-anchor="middle" font-size="14" font-weight="700" fill="#fff">2</text>
+    <text x="770" y="196" font-size="18" font-weight="700" fill="#b08a00">Browser asks "Delete this initiative?"</text>
+    <rect x="1170" y="172" width="270" height="70" rx="6" fill="#fff" stroke="#999"/>
+    <text x="1182" y="194" font-size="13" fill="#222">Delete this initiative?</text>
+    <rect x="1270" y="207" width="70" height="26" rx="4" fill="#eee" stroke="#999"/><text x="1282" y="225" font-size="13">Cancel</text>
+    <rect x="1350" y="207" width="70" height="26" rx="4" fill="#1f6fd1"/><text x="1374" y="225" font-size="13" fill="#fff">OK</text>
+    <text x="770" y="222" font-size="15" fill="#222">Cancel → confirm() = false → <tspan font-family="Consolas, monospace">return</tspan> → nothing happens</text>
+    <text x="770" y="244" font-size="15" fill="#222">OK → confirm() = true → continue</text>
+
+    <rect x="720" y="270" width="740" height="110" rx="12" fill="#f3ecff" stroke="#7b3fd1" stroke-width="2"/>
+    <circle cx="745" cy="300" r="14" fill="#7b3fd1"/><text x="745" y="305" text-anchor="middle" font-size="14" font-weight="700" fill="#fff">3</text>
+    <text x="770" y="306" font-size="18" font-weight="700" fill="#7b3fd1">apiFetch → DELETE /initiatives/2  (with token)</text>
+    <text x="770" y="334" font-size="15" fill="#222">Backend checks in order:  token valid? <tspan fill="#c0392b">(401)</tspan> → initiative exists? <tspan fill="#c0392b">(404)</tspan></text>
+    <text x="770" y="358" font-size="15" fill="#222">→ yours or admin? <tspan fill="#c0392b">(403)</tspan> → delete from DB → <tspan fill="#1e9e5a" font-weight="700">204 No Content</tspan></text>
+  </g>
+  <line x1="950" y1="382" x2="900" y2="410" stroke="#1e9e5a" stroke-width="3" marker-end="url(#gr)"/>
+  <line x1="1230" y1="382" x2="1280" y2="410" stroke="#c0392b" stroke-width="3" marker-end="url(#rd)"/>
+  <g font-family="Segoe UI, Arial">
+    <rect x="720" y="412" width="360" height="148" rx="12" fill="#eafaf0" stroke="#1e9e5a" stroke-width="2"/>
+    <text x="738" y="440" font-size="17" font-weight="700" fill="#1e9e5a">4a · 204 → your initiative</text>
+    <text x="738" y="466" font-size="14" fill="#222">api.js: 204 → returns null (no body)</text>
+    <text x="738" y="490" font-family="Consolas, monospace" font-size="13" fill="#222">setItems(prev =&gt; prev.filter(...))</text>
+    <text x="738" y="516" font-size="14" fill="#222">→ new list without id 2</text>
+    <text x="738" y="540" font-size="14" font-weight="700" fill="#1e9e5a">→ row disappears ✔</text>
+
+    <rect x="1100" y="412" width="360" height="148" rx="12" fill="#fdecea" stroke="#c0392b" stroke-width="2"/>
+    <text x="1118" y="440" font-size="17" font-weight="700" fill="#c0392b">4b · 403 → not yours</text>
+    <text x="1118" y="466" font-size="14" fill="#222">api.js: !res.ok → THROWS (line 22)</text>
+    <text x="1118" y="490" font-size="14" fill="#222">setItems line is SKIPPED → catch</text>
+    <text x="1118" y="516" font-family="Consolas, monospace" font-size="13" fill="#222">alert("You can only change your own...")</text>
+    <text x="1118" y="540" font-size="14" font-weight="700" fill="#c0392b">→ row STAYS ✔ (server said no)</text>
+  </g>
+
+  <!-- ===== B: FILTER ===== -->
+  <text x="40" y="605" font-family="Segoe UI, Arial" font-size="20" font-weight="700" fill="#444">B · How prev.filter(item =&gt; item.id !== 2) builds the NEW list</text>
+  <g font-family="Segoe UI, Arial">
+    <rect x="40" y="620" width="330" height="200" rx="12" fill="#f7f7f7" stroke="#999" stroke-width="2"/>
+    <text x="58" y="648" font-size="16" font-weight="700" fill="#222">prev (old array)</text>
+    <rect x="58" y="662" width="294" height="38" rx="6" fill="#fff" stroke="#bbb"/><text x="70" y="687" font-size="15">id 1 · AI pilot</text>
+    <rect x="58" y="708" width="294" height="38" rx="6" fill="#fff" stroke="#bbb"/><text x="70" y="733" font-size="15">id 2 · Data lake</text>
+    <rect x="58" y="754" width="294" height="38" rx="6" fill="#fff" stroke="#bbb"/><text x="70" y="779" font-size="15">id 3 · CRM revamp</text>
+
+    <rect x="420" y="620" width="560" height="200" rx="12" fill="#fff6d6" stroke="#e0b100" stroke-width="2"/>
+    <text x="438" y="648" font-size="16" font-weight="700" fill="#222">filter asks each item: "item.id !== 2 ?"</text>
+    <text x="438" y="687" font-size="15">id 1 → 1 !== 2 → <tspan font-weight="700" fill="#1e9e5a">true → KEEP ✔</tspan></text>
+    <text x="438" y="733" font-size="15">id 2 → 2 !== 2 → <tspan font-weight="700" fill="#c0392b">false → DROP ✖</tspan></text>
+    <text x="438" y="779" font-size="15">id 3 → 3 !== 2 → <tspan font-weight="700" fill="#1e9e5a">true → KEEP ✔</tspan></text>
+    <text x="438" y="808" font-size="13" fill="#555">filter returns a NEW array — the old one is not changed</text>
+
+    <rect x="1030" y="620" width="430" height="200" rx="12" fill="#eafaf0" stroke="#1e9e5a" stroke-width="2"/>
+    <text x="1048" y="648" font-size="16" font-weight="700" fill="#1e9e5a">NEW array → setItems(...)</text>
+    <rect x="1048" y="662" width="394" height="38" rx="6" fill="#fff" stroke="#bbb"/><text x="1060" y="687" font-size="15">id 1 · AI pilot</text>
+    <rect x="1048" y="708" width="394" height="38" rx="6" fill="#fff" stroke="#bbb"/><text x="1060" y="733" font-size="15">id 3 · CRM revamp</text>
+    <text x="1048" y="775" font-size="14" fill="#222">new array → React sees a change → re-render</text>
+    <text x="1048" y="799" font-size="14" fill="#222">key={item.id} → React removes exactly the id-2 &lt;li&gt;</text>
+  </g>
+  <line x1="372" y1="720" x2="414" y2="720" stroke="#555" stroke-width="3" marker-end="url(#k)"/>
+  <line x1="982" y1="720" x2="1024" y2="720" stroke="#555" stroke-width="3" marker-end="url(#k)"/>
+
+  <!-- ===== C: onClick gotcha ===== -->
+  <rect x="40" y="850" width="700" height="185" rx="12" fill="#fdecea" stroke="#c0392b" stroke-width="2"/>
+  <text x="60" y="880" font-family="Segoe UI, Arial" font-size="19" font-weight="700" fill="#c0392b">C · The onClick trap (very common interview question)</text>
+  <g font-family="Segoe UI, Arial" font-size="15" fill="#222">
+    <text x="60" y="915"><tspan fill="#1e9e5a" font-weight="700">✔</tspan> <tspan font-family="Consolas, monospace">onClick={() =&gt; handleDelete(item.id)}</tspan></text>
+    <text x="85" y="940">gives React a function to call <tspan font-weight="700">LATER</tspan>, when clicked</text>
+    <text x="60" y="980"><tspan fill="#c0392b" font-weight="700">✖</tspan> <tspan font-family="Consolas, monospace">onClick={handleDelete(item.id)}</tspan></text>
+    <text x="85" y="1005">CALLS it <tspan font-weight="700">NOW</tspan>, while drawing the list → tries to delete EVERY row on load!</text>
+    <text x="85" y="1025" font-size="13" fill="#555">(the arrow is needed because we must pass item.id; onClick={handleSubmit} with no () is fine)</text>
+  </g>
+
+  <!-- ===== D: whole app path ===== -->
+  <rect x="760" y="850" width="700" height="185" rx="12" fill="#f7f7f7" stroke="#bbb" stroke-width="2"/>
+  <text x="780" y="880" font-family="Segoe UI, Arial" font-size="19" font-weight="700" fill="#222">D · The same delete through the WHOLE app</text>
+  <g font-family="Segoe UI, Arial" font-size="14" fill="#fff" font-weight="700">
+    <rect x="780" y="898" width="125" height="34" rx="6" fill="#1f6fd1"/><text x="790" y="920">Delete button</text>
+    <rect x="915" y="898" width="125" height="34" rx="6" fill="#1f6fd1"/><text x="925" y="920">handleDelete</text>
+    <rect x="1050" y="898" width="110" height="34" rx="6" fill="#7b3fd1"/><text x="1062" y="920">apiFetch</text>
+    <rect x="1170" y="898" width="270" height="34" rx="6" fill="#555"/><text x="1180" y="920">router DELETE /initiatives/{id}</text>
+    <rect x="780" y="945" width="300" height="34" rx="6" fill="#555"/><text x="790" y="967">OwnedInitiative dep (401 / 404 / 403)</text>
+    <rect x="1090" y="945" width="190" height="34" rx="6" fill="#555"/><text x="1100" y="967">service.delete → DB</text>
+    <rect x="1290" y="945" width="150" height="34" rx="6" fill="#1e9e5a"/><text x="1300" y="967">204 → setItems</text>
+  </g>
+  <text x="780" y="1010" font-family="Segoe UI, Arial" font-size="14" fill="#444">React (Step 9) → api.js → FastAPI router (3) → dependency (6) → service (4) → DB (2)</text>
+
+  <!-- interview strip -->
+  <rect x="40" y="1060" width="1420" height="70" rx="10" fill="#fff6d6" stroke="#e0b100" stroke-width="2"/>
+  <text x="60" y="1090" font-family="Segoe UI, Arial" font-size="17" fill="#222"><tspan font-weight="700">⭐ Interview line:</tspan> "Delete asks for confirmation, sends DELETE with the token, and only on success removes the row with</text>
+  <text x="60" y="1115" font-family="Segoe UI, Arial" font-size="17" fill="#222">setItems(prev =&gt; prev.filter(...)) — a new array. If the backend returns 403, apiFetch throws, I show the message, and the row stays."</text>
+</svg>
