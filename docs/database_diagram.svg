@@ -1,0 +1,94 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1180" height="670" viewBox="0 0 1180 670" font-family="Segoe UI, Arial, sans-serif">
+<defs><marker id="arr" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#334155"/></marker><filter id="sh" x="-5%" y="-5%" width="110%" height="115%"><feDropShadow dx="0" dy="3" stdDeviation="4" flood-opacity="0.15"/></filter></defs>
+<rect width="1180" height="670" fill="#f8fafc"/>
+<text x="590.0" y="48" text-anchor="middle" font-size="28" font-weight="700" fill="#0f172a">Initiative Tracker · Database (3 tables)</text>
+<text x="590.0" y="80" text-anchor="middle" font-size="15" fill="#475569">SQLite file: tracker.db · defined in app/models/models.py</text>
+<g filter="url(#sh)"><rect x="40" y="120" width="300" height="238" rx="12" fill="white" stroke="#2563eb" stroke-width="2"/></g>
+<path d="M40,132 a12,12 0 0 1 12,-12 h276 a12,12 0 0 1 12,12 v38 h-300 z" fill="#2563eb"/>
+<text x="190.0" y="152" text-anchor="middle" font-size="19" font-weight="700" fill="white">users</text>
+<rect x="50" y="178.0" width="30" height="20" rx="5" fill="#7c3aed"/>
+<text x="65" y="192.5" text-anchor="middle" font-size="11" font-weight="700" fill="white">PK</text>
+<text x="88" y="193.0" font-size="15" font-weight="700" fill="#0f172a">id</text>
+<text x="328" y="193.0" text-anchor="end" font-size="12.5" fill="#64748b">INTEGER</text>
+<rect x="42" y="206.0" width="296" height="36" fill="#f1f5f9"/>
+<rect x="50" y="214.0" width="30" height="20" rx="5" fill="#0891b2"/>
+<text x="65" y="228.5" text-anchor="middle" font-size="11" font-weight="700" fill="white">UQ</text>
+<text x="88" y="229.0" font-size="15" font-weight="500" fill="#0f172a">email</text>
+<text x="328" y="229.0" text-anchor="end" font-size="12.5" fill="#64748b">VARCHAR(255)</text>
+<text x="88" y="265.0" font-size="15" font-weight="500" fill="#0f172a">hashed_password</text>
+<text x="328" y="265.0" text-anchor="end" font-size="12.5" fill="#64748b">VARCHAR</text>
+<rect x="42" y="278.0" width="296" height="36" fill="#f1f5f9"/>
+<text x="88" y="301.0" font-size="15" font-weight="500" fill="#0f172a">role</text>
+<text x="328" y="301.0" text-anchor="end" font-size="12.5" fill="#64748b">VARCHAR = &#x27;user&#x27;</text>
+<line x1="40" y1="314" x2="340" y2="314" stroke="#e2e8f0"/>
+<text x="190.0" y="341" text-anchor="middle" font-size="12" font-style="italic" fill="#2563eb">relationship: user.initiatives → list</text>
+<g filter="url(#sh)"><rect x="440" y="120" width="300" height="310" rx="12" fill="white" stroke="#059669" stroke-width="2"/></g>
+<path d="M440,132 a12,12 0 0 1 12,-12 h276 a12,12 0 0 1 12,12 v38 h-300 z" fill="#059669"/>
+<text x="590.0" y="152" text-anchor="middle" font-size="19" font-weight="700" fill="white">initiatives</text>
+<rect x="450" y="178.0" width="30" height="20" rx="5" fill="#7c3aed"/>
+<text x="465" y="192.5" text-anchor="middle" font-size="11" font-weight="700" fill="white">PK</text>
+<text x="488" y="193.0" font-size="15" font-weight="700" fill="#0f172a">id</text>
+<text x="728" y="193.0" text-anchor="end" font-size="12.5" fill="#64748b">INTEGER</text>
+<rect x="442" y="206.0" width="296" height="36" fill="#f1f5f9"/>
+<text x="488" y="229.0" font-size="15" font-weight="500" fill="#0f172a">name</text>
+<text x="728" y="229.0" text-anchor="end" font-size="12.5" fill="#64748b">VARCHAR(200)</text>
+<text x="488" y="265.0" font-size="15" font-weight="500" fill="#0f172a">description</text>
+<text x="728" y="265.0" text-anchor="end" font-size="12.5" fill="#64748b">VARCHAR · NULL ok</text>
+<rect x="442" y="278.0" width="296" height="36" fill="#f1f5f9"/>
+<text x="488" y="301.0" font-size="15" font-weight="500" fill="#0f172a">status</text>
+<text x="728" y="301.0" text-anchor="end" font-size="12.5" fill="#64748b">VARCHAR = &#x27;planned&#x27;</text>
+<text x="488" y="337.0" font-size="15" font-weight="500" fill="#0f172a">budget</text>
+<text x="728" y="337.0" text-anchor="end" font-size="12.5" fill="#64748b">FLOAT = 0</text>
+<rect x="442" y="350.0" width="296" height="36" fill="#f1f5f9"/>
+<rect x="450" y="358.0" width="30" height="20" rx="5" fill="#dc2626"/>
+<text x="465" y="372.5" text-anchor="middle" font-size="11" font-weight="700" fill="white">FK</text>
+<text x="488" y="373.0" font-size="15" font-weight="700" fill="#0f172a">owner_id</text>
+<text x="728" y="373.0" text-anchor="end" font-size="12.5" fill="#64748b">→ users.id</text>
+<line x1="440" y1="386" x2="740" y2="386" stroke="#e2e8f0"/>
+<text x="590.0" y="413" text-anchor="middle" font-size="12" font-style="italic" fill="#059669">relationship: .owner → User  ·  .milestones → list</text>
+<g filter="url(#sh)"><rect x="840" y="120" width="300" height="274" rx="12" fill="white" stroke="#d97706" stroke-width="2"/></g>
+<path d="M840,132 a12,12 0 0 1 12,-12 h276 a12,12 0 0 1 12,12 v38 h-300 z" fill="#d97706"/>
+<text x="990.0" y="152" text-anchor="middle" font-size="19" font-weight="700" fill="white">milestones</text>
+<rect x="850" y="178.0" width="30" height="20" rx="5" fill="#7c3aed"/>
+<text x="865" y="192.5" text-anchor="middle" font-size="11" font-weight="700" fill="white">PK</text>
+<text x="888" y="193.0" font-size="15" font-weight="700" fill="#0f172a">id</text>
+<text x="1128" y="193.0" text-anchor="end" font-size="12.5" fill="#64748b">INTEGER</text>
+<rect x="842" y="206.0" width="296" height="36" fill="#f1f5f9"/>
+<text x="888" y="229.0" font-size="15" font-weight="500" fill="#0f172a">title</text>
+<text x="1128" y="229.0" text-anchor="end" font-size="12.5" fill="#64748b">VARCHAR(200)</text>
+<text x="888" y="265.0" font-size="15" font-weight="500" fill="#0f172a">due_date</text>
+<text x="1128" y="265.0" text-anchor="end" font-size="12.5" fill="#64748b">DATE · NULL ok</text>
+<rect x="842" y="278.0" width="296" height="36" fill="#f1f5f9"/>
+<text x="888" y="301.0" font-size="15" font-weight="500" fill="#0f172a">done</text>
+<text x="1128" y="301.0" text-anchor="end" font-size="12.5" fill="#64748b">BOOLEAN = false</text>
+<rect x="850" y="322.0" width="30" height="20" rx="5" fill="#dc2626"/>
+<text x="865" y="336.5" text-anchor="middle" font-size="11" font-weight="700" fill="white">FK</text>
+<text x="888" y="337.0" font-size="15" font-weight="700" fill="#0f172a">initiative_id</text>
+<text x="1128" y="337.0" text-anchor="end" font-size="12.5" fill="#64748b">→ initiatives.id</text>
+<line x1="840" y1="350" x2="1140" y2="350" stroke="#e2e8f0"/>
+<text x="990.0" y="377" text-anchor="middle" font-size="12" font-style="italic" fill="#d97706">relationship: milestone.initiative → Initiative</text>
+<path d="M340,188.0 H390.0 V368.0 H438" fill="none" stroke="#334155" stroke-width="2.5" marker-end="url(#arr)"/>
+<circle cx="340" cy="188.0" r="4" fill="#334155"/>
+<text x="350" y="180.0" font-size="18" font-weight="700" fill="#334155">1</text>
+<text x="416" y="358.0" font-size="18" font-weight="700" fill="#334155">N</text>
+<text x="382.0" y="278.0" text-anchor="middle" font-size="12" fill="#334155" transform="rotate(-90 382.0 278.0)">owns</text>
+<path d="M740,188.0 H790.0 V332.0 H838" fill="none" stroke="#334155" stroke-width="2.5" marker-end="url(#arr)"/>
+<circle cx="740" cy="188.0" r="4" fill="#334155"/>
+<text x="750" y="180.0" font-size="18" font-weight="700" fill="#334155">1</text>
+<text x="816" y="322.0" font-size="18" font-weight="700" fill="#334155">N</text>
+<text x="782.0" y="260.0" text-anchor="middle" font-size="12" fill="#334155" transform="rotate(-90 782.0 260.0)">has</text>
+<rect x="40" y="465" width="1100" height="170" rx="12" fill="white" stroke="#cbd5e1"/>
+<text x="64" y="499" font-size="17" font-weight="700" fill="#0f172a">How to read it</text>
+<text x="64" y="531" font-size="14" fill="#334155">• <tspan font-weight='700'>1 user → N initiatives</tspan>: initiatives.owner_id stores the id of the user who owns it (foreign key on the "many" side).</text>
+<text x="64" y="559" font-size="14" fill="#334155">• <tspan font-weight='700'>1 initiative → N milestones</tspan>: milestones.initiative_id points to its parent. Deleting an initiative deletes its milestones (cascade).</text>
+<text x="64" y="587" font-size="14" fill="#334155">• relationship() is NOT a column - it is a Python shortcut, e.g. user.initiatives or milestone.initiative.</text>
+<rect x="64" y="601" width="30" height="20" rx="5" fill="#7c3aed"/>
+<text x="79" y="615" text-anchor="middle" font-size="11" font-weight="700" fill="white">PK</text>
+<text x="104" y="615" font-size="13" fill="#475569">primary key (unique id)</text>
+<rect x="394" y="601" width="30" height="20" rx="5" fill="#dc2626"/>
+<text x="409" y="615" text-anchor="middle" font-size="11" font-weight="700" fill="white">FK</text>
+<text x="434" y="615" font-size="13" fill="#475569">foreign key (points to another table)</text>
+<rect x="724" y="601" width="30" height="20" rx="5" fill="#0891b2"/>
+<text x="739" y="615" text-anchor="middle" font-size="11" font-weight="700" fill="white">UQ</text>
+<text x="764" y="615" font-size="13" fill="#475569">unique (no duplicates)</text>
+</svg>

@@ -1,0 +1,12 @@
+# Files git must NOT track (comments must be on their own line in .gitignore).
+
+# virtual env: large, machine-specific, rebuilt from requirements.txt
+.venv/
+# compiled Python bytecode
+__pycache__/
+# SECRETS - never commit (commit .env.example instead)
+.env
+# the local SQLite database file
+*.db
+# pytest cache
+.pytest_cache/

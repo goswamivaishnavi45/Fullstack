@@ -1,0 +1,22 @@
+# Python packages for the backend. Install with:
+#     pip install -r requirements.txt
+# Exact versions (==) so every machine installs the same thing.
+
+# FastAPI + "standard" extras: uvicorn (server), httpx (needed by TestClient),
+# python-multipart (forms, needed for the login form in Step 6)
+fastapi[standard]==0.115.12
+
+# ORM: map database tables to Python classes (Step 2)
+sqlalchemy==2.0.40
+
+# Read settings from env vars / .env with type validation (config.py)
+pydantic-settings==2.9.1
+
+# Create and verify JWT tokens (Step 6)
+pyjwt==2.10.1
+
+# Password hashing with Argon2 (Step 6). Never store plain passwords.
+pwdlib[argon2]==0.2.1
+
+# Testing framework (Step 8)
+pytest==8.3.5
