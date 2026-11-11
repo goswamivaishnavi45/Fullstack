@@ -1,8 +1,9 @@
 # ===== app/routers/auth.py =====
-# Step 6 · Signup, login, "who am I"
+# Step 6 · Signup, login, "who am I"  ·  Step 7 · log failed logins
 # Concepts: OAuth2PasswordRequestForm (form data), JWT access token, 201 / 401 / 409.
-from typing import Annotated
 
+import logging
+from typing import Annotated
 from fastapi import APIRouter, Depends, HTTPException
 from fastapi.security import OAuth2PasswordRequestForm
 
@@ -12,6 +13,7 @@ from app.schemas.user import Token, UserCreate, UserOut
 from app.services import users as service
 
 router = APIRouter(prefix="/auth", tags=["auth"])
+logger = logging.getLogger(__name__)  # one logger per module, named "app.routers.auth"
 
 
 @router.post("/signup", response_model=UserOut, status_code=201)
@@ -25,6 +27,7 @@ def signup(body: UserCreate, db: DB):
 def login(form: Annotated[OAuth2PasswordRequestForm, Depends()], db: DB):
     user = service.authenticate(db, form.username, form.password)
     if user is None:
+        logger.warning("Failed login for %s", form.username)  # email only, NEVER the password
         raise HTTPException(
             status_code=401, detail="Wrong email or password", headers={"WWW-Authenticate": "Bearer"}
         )
